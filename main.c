@@ -26,6 +26,9 @@ void total();
 void search();
 void update();
 
+void scanDetail(kost *new_kost);
+void printDetail(kost *new_kost);
+
 int roomCode(int);
 int upper = 100;
 int lower = 1;
@@ -72,7 +75,7 @@ int main()
             break;
         }
 
-        printf("Balik ke Menu? [1/0]");
+        printf("Balik ke Menu? [1/0] ");
         scanf("%d", &mulai);
     } while (mulai);
     printf("==== TERIMA KASIH ====\n\n");
@@ -86,27 +89,7 @@ void insert()
     printf("====== MENAMBAH KOST ======\n\n");
 
     kost new_kost;
-    fflush(stdin);
-    printf("Nama :");
-    scanf("%[^\n]", new_kost.nama);
-    fflush(stdin);
-    printf("alamat :");
-    scanf("%[^\n]", new_kost.alamat);
-    fflush(stdin);
-    printf("Nomor HP :");
-    scanf("%15s", &new_kost.no_hp);
-    fflush(stdin);
-    printf("Jumlah kamar :");
-    scanf("%d", &new_kost.jumlah_kamar);
-    fflush(stdin);
-    printf("Fasilitas (5) :\n");
-    for (int i = 0; i < 5; i++)
-    {
-        printf("Fasilitas %d :", i + 1);
-        scanf("%[^\n]", &(new_kost.fasilitas[i]));
-        fflush(stdin);
-    }
-
+    scanDetail(&new_kost);
     int id;
     id = (rand() % (upper - lower + 1) + lower);
     new_kost.id_kost = roomCode(id);
@@ -114,16 +97,7 @@ void insert()
     system("clear");
     printf("Kost berhasil ditambahkan!!\n\n");
 
-    printf("Nama kost    :%s\n", new_kost.nama);
-    printf("alamat kost  :%s\n", new_kost.alamat);
-    printf("No HP        :%s\n", new_kost.no_hp);
-    printf("Jumlah kamar :%d\n", new_kost.jumlah_kamar);
-    printf("Kode kost    :%d\n", new_kost.id_kost);
-    printf("Fasilitas :\n");
-    for (int i = 0; i < 5; i++)
-    {
-        printf("\t- %s\n", new_kost.fasilitas[i]);
-    }
+    printDetail(&new_kost);
 
     FILE *fp = fopen("daftarKost.txt", "a");
     if (fp == NULL)
@@ -154,18 +128,7 @@ void display()
     printf("====== DAFTAR KOST =====\n\n");
     while (fread(&new_kost, sizeof(kost), 1, fp))
     {
-
-        printf("Nama kost    :%s\n", new_kost.nama);
-        printf("alamat kost  :%s\n", new_kost.alamat);
-        printf("No HP        :%s\n", new_kost.no_hp);
-        printf("Jumlah kamar :%d\n", new_kost.jumlah_kamar);
-        printf("Kode kost    :%d\n", new_kost.id_kost);
-        printf("Fasilitas :\n");
-        for (int i = 0; i < 5; i++)
-        {
-            printf("\t- %s", new_kost.fasilitas[i]);
-        }
-        printf("\n======================\n");
+        printDetail(&new_kost);
     }
     fclose(fp);
 }
@@ -229,17 +192,7 @@ void search()
         if (new_kost.id_kost == kode_input)
         {
             found = 1;
-            printf("Nama kost    :%s\n", new_kost.nama);
-            printf("alamat kost  :%s\n", new_kost.alamat);
-            printf("No HP        :%s\n", new_kost.no_hp);
-            printf("Jumlah kamar :%d\n", new_kost.jumlah_kamar);
-            printf("Kode kost    :%d\n", new_kost.id_kost);
-            printf("Fasilitas :\n");
-            for (int i = 0; i < 5; i++)
-            {
-                printf("\t- %s", new_kost.fasilitas[i]);
-            }
-            printf("\n======================\n");
+            printDetail(&new_kost);
         }
     }
     if (found != 1)
@@ -276,26 +229,7 @@ void update()
         {
             found = 1;
             printf("Melakukan perubahan ...\n\n");
-            fflush(stdin);
-            printf("Nama :");
-            scanf("%[^\n]", new_kost.nama);
-            fflush(stdin);
-            printf("alamat :");
-            scanf("%[^\n]", new_kost.alamat);
-            fflush(stdin);
-            printf("Nomor HP :");
-            scanf("%15s", &new_kost.no_hp);
-            fflush(stdin);
-            printf("Jumlah kamar :");
-            scanf("%d", &new_kost.jumlah_kamar);
-            fflush(stdin);
-            printf("Fasilitas (5) :\n");
-            for (int i = 0; i < 5; i++)
-            {
-                printf("Fasilitas %d :", i + 1);
-                scanf("%[^\n]", &(new_kost.fasilitas[i]));
-                fflush(stdin);
-            }
+            scanDetail(&new_kost);
             printf("\n======================\n");
         }
 
@@ -320,3 +254,41 @@ void update()
     }
 }
 
+void scanDetail(kost *new_kost)
+{
+    fflush(stdin);
+    printf("Nama :");
+    scanf("%[^\n]", new_kost->nama);
+    fflush(stdin);
+    printf("alamat :");
+    scanf("%[^\n]", new_kost->alamat);
+    fflush(stdin);
+    printf("Nomor HP :");
+    scanf("%15s", &new_kost->no_hp);
+    fflush(stdin);
+    printf("Jumlah kamar :");
+    scanf("%d", &new_kost->jumlah_kamar);
+    fflush(stdin);
+    printf("Fasilitas (5) :\n");
+    for (int i = 0; i < 5; i++)
+    {
+        printf("Fasilitas %d :", i + 1);
+        scanf("%[^\n]", &(new_kost->fasilitas[i]));
+        fflush(stdin);
+    }
+}
+
+void printDetail(kost *new_kost)
+{
+    printf("Nama kost    :%s\n", new_kost->nama);
+    printf("alamat kost  :%s\n", new_kost->alamat);
+    printf("No HP        :%s\n", new_kost->no_hp);
+    printf("Jumlah kamar :%d\n", new_kost->jumlah_kamar);
+    printf("Kode kost    :%d\n", new_kost->id_kost);
+    printf("Fasilitas :\n");
+    for (int i = 0; i < 5; i++)
+    {
+        printf("\t- %s", new_kost->fasilitas[i]);
+    }
+    printf("\n======================\n");
+}
