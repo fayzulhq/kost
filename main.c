@@ -26,7 +26,6 @@ void total();
 void search();
 void update();
 
-// void scanDetail(kost *new_kost);
 int roomCode(int);
 int upper = 100;
 int lower = 1;
@@ -107,8 +106,6 @@ void insert()
         scanf("%[^\n]", &(new_kost.fasilitas[i]));
         fflush(stdin);
     }
-
-    // scanDetail(&new_kost);
 
     int id;
     id = (rand() % (upper - lower + 1) + lower);
@@ -323,26 +320,3 @@ void update()
     }
 }
 
-// void scanDetail(kost *new_kost)
-{
-    fflush(stdin);
-    printf("Nama :");
-    scanf("%[^\n]", new_kost->nama);
-    fflush(stdin);
-    printf("alamat :");
-    scanf("%[^\n]", new_kost->alamat);
-    fflush(stdin);
-    printf("Nomor HP :");
-    scanf("%15s", &new_kost->no_hp);
-    fflush(stdin);
-    printf("Jumlah kamar :");
-    scanf("%d", &new_kost->jumlah_kamar);
-    fflush(stdin);
-    printf("Fasilitas (5) :\n");
-    for (int i = 0; i < 5; i++)
-    {
-        printf("Fasilitas %d :", i + 1);
-        scanf("%[^\n]", &(new_kost->fasilitas[i]));
-        fflush(stdin);
-    }
-}
